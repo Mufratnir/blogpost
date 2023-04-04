@@ -1,15 +1,12 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-if (empty($_POST ['name']) ||empty($_POST['Email']) || empty($_POST['subject']  ) ||empty($_POST['field'])) {
-	die ("Please fill out all fields");
+if (empty($_POST ['name']) ||empty($_POST['Email']) || empty($_POST['subject']  ) ||empty($_POST['message'])) {
+
 }
 $name = $_POST ['name'];
 $email = $_POST['Email'];
 $subject = $_POST['subject'];
-$textarea = $_POST['field'];
-
-
-
+$textarea = $_POST['message'];
 
 $data = array($name,$email,$subject,$textarea);
 $file = fopen('users.csv', 'a');
@@ -18,9 +15,9 @@ $file = fopen('users.csv', 'a');
  }
 fclose($file);
 }
+
 ?>
-<!DOCTYPE html><!--  This site was created in Webflow. https://www.webflow.com  -->
-<!--  Last Published: Tue Apr 04 2023 02:57:25 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html>
 <html data-wf-page="642a467e8fbcbe3ccbe71beb" data-wf-site="642a4037625193028765df5d">
 <head>
   <meta charset="utf-8">
@@ -67,7 +64,8 @@ fclose($file);
     <div class="contact-wrapper">
       <h1 class="heading-size-h3 mg-bottom-40-px">Send Us a Message</h1>
       <div class="contact-from-block w-form">
-        <form action="contact.php"  method="post" class="contact-from">
+        <form action="mail.php"  method="post" class="contact-from">
+          
           <div id="w-node-_1c563c51-8b56-8366-3e7e-db15a253c2de-cbe71beb" class="field-block width350-px">
             <label for="name" class="field-label">Name</label>
             <input type="text" class="input w-input" maxlength="256" name="name" data-name="Name" placeholder="Enter your full name" id="name" required=""></div>
@@ -79,15 +77,20 @@ fclose($file);
             <input type="text" class="input w-input" maxlength="256" name="subject" data-name="subject" placeholder="Example Text" id="subject" required=""></div>
           <div id="w-node-_1c563c51-8b56-8366-3e7e-db15a253c2ea-cbe71beb" class="field-block text-area">
             <label for="field" class="field-label">Message</label>
-            <textarea placeholder="Write your message" maxlength="5000" id="field" name="field" required="" data-name="field" class="massage-text-area w-input"></textarea>
+            <textarea placeholder="Write your message" maxlength="5000" id="message" name="message" required="" data-name="message" class="massage-text-area w-input"></textarea>
           </div><input type="submit" value="Submit" data-wait="Please wait..." id="w-node-_1c563c51-8b56-8366-3e7e-db15a253c2ee-cbe71beb" class="primary-button w-button">
         </form>
+        
+        <?php 
+        if($_GET['message'] == 'Successfull'){?>
         <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>
         </div>
+        <?php } else{?>
         <div class="w-form-fail">
           <div>Oops! Something went wrong while submitting the form.</div>
         </div>
+        <?php }?>
       </div>
     </div>
   </div>
